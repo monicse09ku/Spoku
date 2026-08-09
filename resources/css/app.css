@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --spoku-ink: #0b1220;
+    --spoku-ink-soft: #1c2740;
+    --spoku-mute: #5b667a;
+    --spoku-paper: #f2f4f7;
+    --spoku-raised: #ffffff;
+    --spoku-line: #d8dee8;
+    --spoku-signal: #c1121f;
+    --spoku-trust: #1a5f6f;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-paper text-ink antialiased font-sans;
+        background-image:
+            radial-gradient(1200px 500px at 10% -10%, rgba(26, 95, 111, 0.12), transparent 55%),
+            radial-gradient(900px 420px at 100% 0%, rgba(193, 18, 31, 0.08), transparent 50%),
+            linear-gradient(180deg, #eef2f6 0%, #f2f4f7 40%, #e9edf3 100%);
+        background-attachment: fixed;
+    }
+
+    ::selection {
+        background: rgba(193, 18, 31, 0.18);
+    }
+}
+
+@layer components {
+    .spoku-shell {
+        @apply relative min-h-screen;
+    }
+
+    .spoku-shell::before {
+        content: '';
+        pointer-events: none;
+        position: fixed;
+        inset: 0;
+        opacity: 0.035;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        z-index: 0;
+    }
+
+    .spoku-shell > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .spoku-nav {
+        @apply border-b border-paper-line/80 bg-paper-raised/80 backdrop-blur-md;
+    }
+
+    .spoku-brand {
+        @apply font-display text-2xl tracking-tight text-ink;
+    }
+
+    .spoku-brand span {
+        @apply text-signal;
+    }
+
+    .spoku-link {
+        @apply text-sm font-medium text-ink-mute transition hover:text-ink;
+    }
+
+    .spoku-link-active {
+        @apply text-sm font-semibold text-ink;
+    }
+
+    .spoku-btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-semibold transition duration-200;
+    }
+
+    .spoku-btn-primary {
+        @apply spoku-btn bg-signal text-white hover:bg-signal-deep focus:outline-none focus:ring-2 focus:ring-signal/40 focus:ring-offset-2;
+    }
+
+    .spoku-btn-secondary {
+        @apply spoku-btn border border-paper-line bg-paper-raised text-ink hover:border-ink/30;
+    }
+
+    .spoku-btn-ghost {
+        @apply spoku-btn text-ink-mute hover:text-ink hover:bg-white/60;
+    }
+
+    .spoku-panel {
+        @apply border border-paper-line/90 bg-paper-raised/90 shadow-soft;
+    }
+
+    .spoku-input {
+        @apply mt-1 block w-full rounded-md border-paper-line bg-white text-ink shadow-none focus:border-trust focus:ring-trust;
+    }
+
+    .spoku-table {
+        @apply min-w-full text-sm;
+    }
+
+    .spoku-table thead {
+        @apply border-b border-paper-line text-left text-ink-mute;
+    }
+
+    .spoku-table th {
+        @apply px-4 py-3 font-medium;
+    }
+
+    .spoku-table td {
+        @apply px-4 py-3.5 border-b border-paper-line/70 text-ink;
+    }
+
+    .spoku-hero {
+        @apply relative overflow-hidden border-b border-paper-line;
+        background:
+            linear-gradient(135deg, rgba(11, 18, 32, 0.94), rgba(28, 39, 64, 0.88)),
+            url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1800&q=80') center/cover;
+        min-height: min(78vh, 640px);
+    }
+
+    .spoku-hero-copy {
+        @apply max-w-3xl text-white;
+    }
+
+    .spoku-kicker {
+        @apply text-xs font-semibold uppercase tracking-[0.22em] text-white/70;
+    }
+
+    .spoku-section-title {
+        @apply font-display text-3xl text-ink tracking-tight sm:text-4xl;
+    }
+
+    .spoku-muted {
+        @apply text-ink-mute;
+    }
+
+    .spoku-status {
+        @apply inline-flex items-center px-2.5 py-1 text-xs font-semibold tracking-wide;
+    }
+
+    .spoku-status-pending {
+        @apply spoku-status bg-amber-100 text-amber-900;
+    }
+
+    .spoku-status-published {
+        @apply spoku-status bg-trust-soft text-trust;
+    }
+
+    .spoku-status-rejected {
+        @apply spoku-status bg-signal-soft text-signal-deep;
+    }
+
+    .spoku-reaction {
+        @apply inline-flex items-center gap-2 border border-paper-line bg-white px-3 py-2 text-sm font-medium text-ink transition hover:border-signal/40 hover:text-signal;
+    }
+
+    .spoku-reaction-active {
+        @apply border-signal bg-signal text-white hover:border-signal-deep hover:bg-signal-deep hover:text-white;
+    }
+}
