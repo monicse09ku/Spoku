@@ -21,6 +21,7 @@ class User extends Authenticatable
         'roll',
         'role',
         'contact_info',
+        'image_path',
         'is_active',
         'password',
     ];
@@ -38,6 +39,13 @@ class User extends Authenticatable
             'role' => UserRole::class,
             'is_active' => 'boolean',
         ];
+    }
+
+    public function imageUrl(): ?string
+    {
+        return $this->image_path
+            ? asset('storage/'.$this->image_path)
+            : null;
     }
 
     public function complaints(): HasMany

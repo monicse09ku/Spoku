@@ -19,6 +19,7 @@
                 <table class="spoku-table">
                     <thead>
                         <tr>
+                            <th>Photo</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
@@ -29,6 +30,13 @@
                     <tbody>
                         @foreach($users as $user)
                             <tr>
+                                <td>
+                                    @if($user->imageUrl())
+                                        <img src="{{ $user->imageUrl() }}" alt="" class="w-10 h-10 object-cover">
+                                    @else
+                                        <div class="w-10 h-10 bg-ink/5 text-[10px] text-ink-mute flex items-center justify-center">N/A</div>
+                                    @endif
+                                </td>
                                 <td class="font-medium">{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->phone }}</td>

@@ -15,17 +15,10 @@
                 'Law Enforcers' => $law_enforcers,
             ] as $label => $people)
                 <section>
-                    <h3 class="font-display text-2xl mb-4">{{ $label }}</h3>
-                    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <h3 class="font-display text-2xl mb-6">{{ $label }}</h3>
+                    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         @forelse($people as $person)
-                            <div class="border-b border-paper-line pb-4">
-                                <div class="font-semibold text-ink">{{ $person->name }}</div>
-                                <div class="text-sm text-ink-mute mt-1">{{ $person->email }}</div>
-                                <div class="text-sm text-ink-mute">{{ $person->phone }}</div>
-                                @if($person->contact_info)
-                                    <div class="text-sm text-ink-soft mt-2">{{ $person->contact_info }}</div>
-                                @endif
-                            </div>
+                            <x-staff-card :user="$person" :show-role="true" :show-contact="true" />
                         @empty
                             <p class="text-ink-mute text-sm">No contacts listed.</p>
                         @endforelse

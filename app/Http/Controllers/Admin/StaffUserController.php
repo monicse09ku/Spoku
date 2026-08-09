@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
@@ -44,14 +45,21 @@ class StaffUserController extends Controller
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'phone' => ['nullable', 'string', 'max:50'],
             'contact_info' => ['nullable', 'string', 'max:500'],
+            'image' => ['nullable', 'image', 'max:5120'],
             'password' => ['required', 'confirmed', Password::defaults()],
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('staff', 'public');
+        }
 
         User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'] ?? null,
             'contact_info' => $data['contact_info'] ?? null,
+            'image_path' => $imagePath,
             'role' => $userRole,
             'is_active' => true,
             'password' => Hash::make($data['password']),
@@ -84,6 +92,7 @@ class StaffUserController extends Controller
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
             'phone' => ['nullable', 'string', 'max:50'],
             'contact_info' => ['nullable', 'string', 'max:500'],
+            'image' => ['nullable', 'image', 'max:5120'],
             'password' => ['nullable', 'confirmed', Password::defaults()],
         ]);
 
@@ -94,6 +103,13 @@ class StaffUserController extends Controller
             'contact_info' => $data['contact_info'] ?? null,
             'is_active' => $request->boolean('is_active'),
         ]);
+
+        if ($request->hasFile('image')) {
+            if ($user->image_path) {
+                Storage::disk('public')->delete($user->image_path);
+            }
+            $user->image_path = $request->file('image')->store('staff', 'public');
+        }
 
         if (! empty($data['password'])) {
             $user->password = Hash::make($data['password']);
@@ -110,6 +126,10 @@ class StaffUserController extends Controller
     {
         $userRole = $this->resolveRole($role);
         abort_unless($user->role === $userRole, 404);
+
+        if ($user->image_path) {
+            Storage::disk('public')->delete($user->image_path);
+        }
 
         $user->delete();
 

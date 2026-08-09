@@ -8,11 +8,13 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicComplaintController;
 use App\Http\Controllers\Staff\AssignedComplaintController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\User\ComplaintController as UserComplaintController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PublicComplaintController::class, 'index'])->name('home');
 Route::get('/feed/{complaint}', [PublicComplaintController::class, 'show'])->name('feed.show');
+Route::get('/team', TeamController::class)->name('team');
 
 Route::get('/dashboard', DashboardController::class)
     ->middleware(['auth'])

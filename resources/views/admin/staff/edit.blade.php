@@ -1,11 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Edit {{ $role->label() }}</h2>
+        <div>
+            <h2 class="font-display text-3xl text-ink">Edit {{ $role->label() }}</h2>
+            <p class="mt-1 text-sm text-ink-mute">Update account details and profile image.</p>
+        </div>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
-            <form method="POST" action="{{ route('admin.staff.update', [$roleSlug, $user]) }}" class="bg-white shadow rounded-lg p-6 space-y-4">
+    <div class="py-10">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <form method="POST" action="{{ route('admin.staff.update', [$roleSlug, $user]) }}" enctype="multipart/form-data" class="spoku-panel p-6 sm:p-8 space-y-4">
                 @csrf @method('PUT')
                 <div>
                     <x-input-label for="name" value="Name" />
@@ -23,8 +26,17 @@
                     <x-input-label for="contact_info" value="Contact info" />
                     <x-text-input id="contact_info" name="contact_info" class="block mt-1 w-full" :value="old('contact_info', $user->contact_info)" />
                 </div>
+                <div>
+                    <x-input-label for="image" value="Profile image" />
+                    @if($user->imageUrl())
+                        <img src="{{ $user->imageUrl() }}" alt="{{ $user->name }}" class="mt-2 w-24 h-24 object-cover">
+                    @endif
+                    <input id="image" type="file" name="image" accept="image/*" class="mt-2 block w-full text-sm text-ink-mute">
+                    <p class="mt-1 text-xs text-ink-mute">Upload a new image to replace the current one.</p>
+                    <x-input-error :messages="$errors->get('image')" class="mt-2" />
+                </div>
                 <div class="flex items-center gap-2">
-                    <input id="is_active" type="checkbox" name="is_active" value="1" @checked(old('is_active', $user->is_active))>
+                    <input id="is_active" type="checkbox" name="is_active" value="1" class="rounded border-paper-line text-signal focus:ring-signal" @checked(old('is_active', $user->is_active))>
                     <x-input-label for="is_active" value="Active" />
                 </div>
                 <div>
@@ -35,8 +47,8 @@
                     <x-input-label for="password_confirmation" value="Confirm password" />
                     <x-text-input id="password_confirmation" type="password" name="password_confirmation" class="block mt-1 w-full" />
                 </div>
-                <div class="flex justify-end gap-3">
-                    <a href="{{ route('admin.staff.index', $roleSlug) }}" class="text-sm text-gray-600 underline self-center">Cancel</a>
+                <div class="flex justify-end gap-3 pt-2">
+                    <a href="{{ route('admin.staff.index', $roleSlug) }}" class="spoku-btn-ghost self-center">Cancel</a>
                     <x-primary-button>Save</x-primary-button>
                 </div>
             </form>

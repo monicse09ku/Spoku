@@ -8,6 +8,9 @@
                     <a href="{{ route('home') }}" class="{{ request()->routeIs('home', 'feed.*') ? 'spoku-link-active' : 'spoku-link' }}">
                         Public Feed
                     </a>
+                    <a href="{{ route('team') }}" class="{{ request()->routeIs('team') ? 'spoku-link-active' : 'spoku-link' }}">
+                        Team
+                    </a>
 
                     @auth
                         <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard', 'admin.*', 'approver.*', 'lawyer.*', 'counselor.*', 'law-enforcer.*', 'user.*') ? 'spoku-link-active' : 'spoku-link' }}">
@@ -69,6 +72,7 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden border-t border-paper-line bg-paper-raised">
         <div class="px-4 py-3 space-y-2">
             <a href="{{ route('home') }}" class="block spoku-link">Public Feed</a>
+            <a href="{{ route('team') }}" class="block spoku-link">Team</a>
             @auth
                 <a href="{{ route('dashboard') }}" class="block spoku-link">Dashboard</a>
                 @if(auth()->user()->role === \App\Enums\UserRole::User)
