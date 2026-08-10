@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ApprovalDecision;
 use App\Enums\ComplaintStatus;
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -68,12 +69,16 @@ class Complaint extends Model
 
     public function approvedCount(): int
     {
-        return $this->approvals()->where('decision', ApprovalDecision::Approved)->count();
+        return $this->approvals()
+            ->where('decision', ApprovalDecision::Approved->value)
+            ->count();
     }
 
     public function rejectedCount(): int
     {
-        return $this->approvals()->where('decision', ApprovalDecision::Rejected)->count();
+        return $this->approvals()
+            ->where('decision', ApprovalDecision::Rejected->value)
+            ->count();
     }
 
     public function submitterDisplayName(): string
@@ -87,31 +92,38 @@ class Complaint extends Model
 
     public function refreshPublicationStatus(): void
     {
-        $threshold = config('spoku.approval_threshold', 7);
+        $threshold = (int) config('spoku.approval_threshold', 7);
         $approved = $this->approvedCount();
+        $rejected = $this->rejectedCount();
 
         if ($approved >= $threshold) {
-            $this->update([
+            $this->forceFill([
                 'status' => ComplaintStatus::Published,
                 'published_at' => $this->published_at ?? now(),
-            ]);
+            ])->save();
 
             return;
         }
 
         $approverCount = User::query()
-            ->where('role', \App\Enums\UserRole::Approver)
+            ->where('role', UserRole::Approver)
             ->where('is_active', true)
             ->count();
 
-        $rejected = $this->rejectedCount();
         $remaining = max($approverCount - $approved - $rejected, 0);
 
-        if ($approved + $remaining < $threshold && $rejected > 0) {
-            $this->update([
+        if ($approved + $remaining < $threshold) {
+            $this->forceFill([
                 'status' => ComplaintStatus::Rejected,
                 'published_at' => null,
-            ]);
+            ])->save();
+
+            return;
         }
+
+        $this->forceFill([
+            'status' => ComplaintStatus::Pending,
+            'published_at' => null,
+        ])->save();
     }
 }

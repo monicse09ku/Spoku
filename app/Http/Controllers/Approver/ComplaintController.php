@@ -44,15 +44,12 @@ class ComplaintController extends Controller
                 'user_id' => $request->user()->id,
             ],
             [
-                'decision' => ApprovalDecision::from($data['decision']),
+                'decision' => ApprovalDecision::from($data['decision'])->value,
                 'notes' => $data['notes'] ?? null,
             ]
         );
 
-        if ($complaint->status !== ComplaintStatus::Published) {
-            $complaint->update(['status' => ComplaintStatus::Pending]);
-        }
-
+        $complaint->refresh();
         $complaint->refreshPublicationStatus();
 
         return back()->with('status', 'Your decision has been recorded.');
