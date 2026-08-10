@@ -18,6 +18,7 @@ class DashboardController extends Controller
                 'lawyers' => User::where('role', UserRole::Lawyer)->count(),
                 'counselors' => User::where('role', UserRole::Counselor)->count(),
                 'law_enforcers' => User::where('role', UserRole::LawEnforcer)->count(),
+                'humanitarians' => User::where('role', UserRole::Humanitarian)->count(),
                 'users' => User::where('role', UserRole::User)->count(),
                 'complaints' => Complaint::count(),
                 'pending' => Complaint::where('status', 'pending')->count(),

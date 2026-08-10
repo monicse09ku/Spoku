@@ -9,6 +9,7 @@ enum UserRole: string
     case Lawyer = 'lawyer';
     case Counselor = 'counselor';
     case LawEnforcer = 'law_enforcer';
+    case Humanitarian = 'humanitarian';
     case User = 'user';
 
     public function label(): string
@@ -19,6 +20,7 @@ enum UserRole: string
             self::Lawyer => 'Lawyer',
             self::Counselor => 'Counselor',
             self::LawEnforcer => 'Law Enforcer',
+            self::Humanitarian => 'Humanitarian',
             self::User => 'User',
         };
     }
@@ -30,6 +32,7 @@ enum UserRole: string
             self::Lawyer,
             self::Counselor,
             self::LawEnforcer,
+            self::Humanitarian,
         ];
     }
 

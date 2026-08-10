@@ -17,6 +17,7 @@ class AssignedComplaintController extends Controller
             UserRole::Lawyer => 'assigned_to_lawyers',
             UserRole::Counselor => 'assigned_to_counselors',
             UserRole::LawEnforcer => 'assigned_to_law_enforcers',
+            UserRole::Humanitarian => 'assigned_to_humanitarians',
             default => abort(403),
         };
 
@@ -38,6 +39,7 @@ class AssignedComplaintController extends Controller
             UserRole::Lawyer => $complaint->assigned_to_lawyers,
             UserRole::Counselor => $complaint->assigned_to_counselors,
             UserRole::LawEnforcer => $complaint->assigned_to_law_enforcers,
+            UserRole::Humanitarian => $complaint->assigned_to_humanitarians,
             default => false,
         };
 

@@ -26,7 +26,9 @@
                                         $showRoute = match(auth()->user()->role) {
                                             \App\Enums\UserRole::Lawyer => 'lawyer.complaints.show',
                                             \App\Enums\UserRole::Counselor => 'counselor.complaints.show',
-                                            default => 'law-enforcer.complaints.show',
+                                            \App\Enums\UserRole::LawEnforcer => 'law-enforcer.complaints.show',
+                                            \App\Enums\UserRole::Humanitarian => 'humanitarian.complaints.show',
+                                            default => 'lawyer.complaints.show',
                                         };
                                     @endphp
                                     <a class="text-indigo-600" href="{{ route($showRoute, $complaint) }}">Open</a>

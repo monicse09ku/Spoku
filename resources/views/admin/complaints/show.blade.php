@@ -25,6 +25,7 @@
                     <label class="flex items-center gap-2"><input type="checkbox" name="assigned_to_lawyers" value="1" @checked($complaint->assigned_to_lawyers)> Lawyers</label>
                     <label class="flex items-center gap-2"><input type="checkbox" name="assigned_to_counselors" value="1" @checked($complaint->assigned_to_counselors)> Counselors</label>
                     <label class="flex items-center gap-2"><input type="checkbox" name="assigned_to_law_enforcers" value="1" @checked($complaint->assigned_to_law_enforcers)> Law Enforcers</label>
+                    <label class="flex items-center gap-2"><input type="checkbox" name="assigned_to_humanitarians" value="1" @checked($complaint->assigned_to_humanitarians)> Humanitarians</label>
                     <x-primary-button>Save assignments</x-primary-button>
                 </form>
             </div>

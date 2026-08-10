@@ -13,7 +13,7 @@
                     </a>
 
                     @auth
-                        <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard', 'admin.*', 'approver.*', 'lawyer.*', 'counselor.*', 'law-enforcer.*', 'user.*') ? 'spoku-link-active' : 'spoku-link' }}">
+                        <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard', 'admin.*', 'approver.*', 'lawyer.*', 'counselor.*', 'law-enforcer.*', 'humanitarian.*', 'user.*') ? 'spoku-link-active' : 'spoku-link' }}">
                             Dashboard
                         </a>
 

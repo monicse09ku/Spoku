@@ -35,6 +35,7 @@ class ComplaintController extends Controller
                 'lawyers' => User::where('role', UserRole::Lawyer)->where('is_active', true)->get(),
                 'counselors' => User::where('role', UserRole::Counselor)->where('is_active', true)->get(),
                 'law_enforcers' => User::where('role', UserRole::LawEnforcer)->where('is_active', true)->get(),
+                'humanitarians' => User::where('role', UserRole::Humanitarian)->where('is_active', true)->get(),
             ],
         ]);
     }
@@ -117,6 +118,7 @@ class ComplaintController extends Controller
             'lawyers' => User::where('role', UserRole::Lawyer)->where('is_active', true)->get(),
             'counselors' => User::where('role', UserRole::Counselor)->where('is_active', true)->get(),
             'law_enforcers' => User::where('role', UserRole::LawEnforcer)->where('is_active', true)->get(),
+            'humanitarians' => User::where('role', UserRole::Humanitarian)->where('is_active', true)->get(),
         ]);
     }
 }

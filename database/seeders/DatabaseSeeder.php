@@ -73,6 +73,18 @@ class DatabaseSeeder extends Seeder
         );
 
         User::query()->updateOrCreate(
+            ['email' => 'humanitarian@spoku.test'],
+            [
+                'name' => 'Sample Humanitarian',
+                'phone' => '01555555555',
+                'contact_info' => 'Humanitarian support desk',
+                'role' => UserRole::Humanitarian,
+                'is_active' => true,
+                'password' => Hash::make('password'),
+            ]
+        );
+
+        User::query()->updateOrCreate(
             ['email' => 'user@spoku.test'],
             [
                 'name' => 'Sample User',

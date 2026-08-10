@@ -12,6 +12,7 @@
                     'Lawyers' => $stats['lawyers'],
                     'Counselors' => $stats['counselors'],
                     'Law Enforcers' => $stats['law_enforcers'],
+                    'Humanitarians' => $stats['humanitarians'],
                     'Users' => $stats['users'],
                     'Complaints' => $stats['complaints'],
                     'Pending' => $stats['pending'],
@@ -31,6 +32,7 @@
                     <a class="spoku-panel p-5 hover:border-signal/40 transition" href="{{ route('admin.staff.index', 'lawyers') }}">Manage Lawyers</a>
                     <a class="spoku-panel p-5 hover:border-signal/40 transition" href="{{ route('admin.staff.index', 'counselors') }}">Manage Counselors</a>
                     <a class="spoku-panel p-5 hover:border-signal/40 transition" href="{{ route('admin.staff.index', 'law-enforcers') }}">Manage Law Enforcers</a>
+                    <a class="spoku-panel p-5 hover:border-signal/40 transition" href="{{ route('admin.staff.index', 'humanitarians') }}">Manage Humanitarians</a>
                     <a class="spoku-panel p-5 hover:border-signal/40 transition" href="{{ route('admin.complaints.index') }}">Complaint Management</a>
                 </div>
             </div>

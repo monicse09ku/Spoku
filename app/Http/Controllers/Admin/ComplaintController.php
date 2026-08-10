@@ -34,6 +34,7 @@ class ComplaintController extends Controller
             'assigned_to_lawyers' => $request->boolean('assigned_to_lawyers'),
             'assigned_to_counselors' => $request->boolean('assigned_to_counselors'),
             'assigned_to_law_enforcers' => $request->boolean('assigned_to_law_enforcers'),
+            'assigned_to_humanitarians' => $request->boolean('assigned_to_humanitarians'),
         ]);
 
         return back()->with('status', 'Assignments updated.');

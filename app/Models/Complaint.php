@@ -22,6 +22,7 @@ class Complaint extends Model
         'assigned_to_lawyers',
         'assigned_to_counselors',
         'assigned_to_law_enforcers',
+        'assigned_to_humanitarians',
         'published_at',
     ];
 
@@ -33,6 +34,7 @@ class Complaint extends Model
             'assigned_to_lawyers' => 'boolean',
             'assigned_to_counselors' => 'boolean',
             'assigned_to_law_enforcers' => 'boolean',
+            'assigned_to_humanitarians' => 'boolean',
             'published_at' => 'datetime',
         ];
     }

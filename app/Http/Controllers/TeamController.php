@@ -15,6 +15,7 @@ class TeamController extends Controller
             UserRole::Lawyer->value,
             UserRole::Counselor->value,
             UserRole::LawEnforcer->value,
+            UserRole::Humanitarian->value,
         ];
 
         $staff = User::query()
@@ -31,6 +32,7 @@ class TeamController extends Controller
                 'lawyer' => ['label' => 'Lawyers', 'members' => $staff->get('lawyer', collect())],
                 'counselor' => ['label' => 'Counselors', 'members' => $staff->get('counselor', collect())],
                 'law_enforcer' => ['label' => 'Law Enforcers', 'members' => $staff->get('law_enforcer', collect())],
+                'humanitarian' => ['label' => 'Humanitarians', 'members' => $staff->get('humanitarian', collect())],
             ],
         ]);
     }

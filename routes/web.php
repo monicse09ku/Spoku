@@ -64,6 +64,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/complaints/{complaint}', [AssignedComplaintController::class, 'show'])->name('complaints.show');
     });
 
+    Route::middleware('role:humanitarian')->prefix('humanitarian')->name('humanitarian.')->group(function () {
+        Route::get('/complaints', [AssignedComplaintController::class, 'index'])->name('complaints.index');
+        Route::get('/complaints/{complaint}', [AssignedComplaintController::class, 'show'])->name('complaints.show');
+    });
+
     Route::middleware('role:user')->prefix('my')->name('user.')->group(function () {
         Route::get('/complaints', [UserComplaintController::class, 'index'])->name('complaints.index');
         Route::get('/complaints/create', [UserComplaintController::class, 'create'])->name('complaints.create');

@@ -18,6 +18,7 @@ class DashboardController extends Controller
             UserRole::Lawyer => redirect()->route('lawyer.complaints.index'),
             UserRole::Counselor => redirect()->route('counselor.complaints.index'),
             UserRole::LawEnforcer => redirect()->route('law-enforcer.complaints.index'),
+            UserRole::Humanitarian => redirect()->route('humanitarian.complaints.index'),
             default => redirect()->route('user.complaints.index'),
         };
     }

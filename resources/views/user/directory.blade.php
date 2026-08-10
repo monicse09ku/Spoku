@@ -13,6 +13,7 @@
                 'Lawyers' => $lawyers,
                 'Counselors' => $counselors,
                 'Law Enforcers' => $law_enforcers,
+                'Humanitarians' => $humanitarians,
             ] as $label => $people)
                 <section>
                     <h3 class="font-display text-2xl mb-6">{{ $label }}</h3>

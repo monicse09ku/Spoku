@@ -145,6 +145,7 @@ class StaffUserController extends Controller
             'lawyers' => UserRole::Lawyer,
             'counselors' => UserRole::Counselor,
             'law-enforcers' => UserRole::LawEnforcer,
+            'humanitarians' => UserRole::Humanitarian,
             default => abort(404),
         };
     }
