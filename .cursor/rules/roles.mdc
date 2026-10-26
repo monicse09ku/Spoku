@@ -1,0 +1,15 @@
+---
+description: User roles, role middleware, and dashboard redirects
+globs: app/Enums/UserRole.php,app/Http/Middleware/EnsureUserHasRole.php,app/Http/Controllers/DashboardController.php,bootstrap/app.php
+alwaysApply: false
+---
+
+# Roles
+
+Enum `App\Enums\UserRole`: `admin`, `approver`, `lawyer`, `counselor`, `law_enforcer`, `humanitarian`, `user`.
+
+`staffRoles()` is approver, lawyer, counselor, law enforcer, humanitarian. Approvers vote. The other four only see assigned complaints.
+
+- Middleware alias `role` → `EnsureUserHasRole`. Inactive users get 403.
+- `DashboardController` redirects each role to its home route.
+- New role checklist: enum + label, route group + middleware, dashboard match, admin staff slug, team group, user directory.

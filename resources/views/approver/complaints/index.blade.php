@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div>
             <h2 class="font-display text-3xl text-ink">Complaints for approval</h2>
-            <p class="mt-1 text-sm text-ink-mute">Publish threshold: {{ config('spoku.approval_threshold') }} approvals.</p>
+            <p class="mt-1 text-sm text-ink-mute">Complaints appear here after admin forwards them. {{ config('spoku.approval_threshold') }} approvals needed before admin can publish.</p>
         </div>
     </x-slot>
 

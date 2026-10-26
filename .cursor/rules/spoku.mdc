@@ -1,0 +1,20 @@
+---
+description: SPOKU module map. Load only the matching module rule; do not scan unrelated modules.
+alwaysApply: true
+---
+
+# SPOKU
+
+Laravel 12 + Breeze Blade. Parked at `https://spoku.test`. MySQL `spoku`. Design tokens live in `resources/css/app.css` (`spoku-*` classes).
+
+Read only the rule for the module you are changing:
+
+| Module | Rule | When |
+|---|---|---|
+| Auth | `auth.mdc` | register, login, profile |
+| Roles | `roles.mdc` | `UserRole`, middleware, dashboard redirect |
+| Complaints | `complaints.mdc` | status flow, filings, approver votes, admin publish |
+| Staff | `staff.mdc` | staff CRUD, assignments, team, directory |
+| Public | `public.mdc` | feed and reactions |
+
+Do not republish a complaint from approver votes. Admin publishes. Do not add a role without updating `UserRole`, routes, team, and directory together.

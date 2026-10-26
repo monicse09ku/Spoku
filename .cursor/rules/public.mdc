@@ -1,0 +1,15 @@
+---
+description: Public complaint feed and reactions
+globs: app/Http/Controllers/PublicComplaintController.php,app/Enums/ReactionType.php,app/Models/Reaction.php,resources/views/public/complaints/**,resources/views/layouts/navigation.blade.php
+alwaysApply: false
+---
+
+# Public feed
+
+Only `ComplaintStatus::Published` is public. Use `Complaint::scopePublished`. Anonymous complaints show submitter as "Anonymous".
+
+Routes: `home` (`/`), `feed.show` (`/feed/{complaint}`), `feed.react` (auth POST).
+
+One reaction per user per complaint (`reactions` unique on complaint_id + user_id). Types: spitting, cursing, shoe_throwing, burning, disgust, outrage. Guests see counts and a login/register prompt.
+
+Nav lives in `layouts/navigation.blade.php` for the app layout. Guest auth pages use `layouts/guest.blade.php` (`auth.mdc`). Keep a public Team link (`staff.mdc`).

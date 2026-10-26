@@ -1,0 +1,21 @@
+---
+description: Complaint lifecycle from user submit through admin publish
+globs: app/Models/Complaint.php,app/Enums/ComplaintStatus.php,app/Enums/ApprovalDecision.php,app/Http/Controllers/Admin/ComplaintController.php,app/Http/Controllers/Approver/**,app/Http/Controllers/User/ComplaintController.php,resources/views/admin/complaints/**,resources/views/approver/**,resources/views/user/complaints/**,config/spoku.php
+alwaysApply: false
+---
+
+# Complaints
+
+Status flow (`ComplaintStatus`). Do not skip steps. Approver votes never set `published`.
+
+1. User files → `pending` (Awaiting Admin Review). Optional help flags: lawyers, counselors, law enforcers, humanitarians.
+2. Admin `sendToApprovers` → `awaiting_approvers`. Or `reject` → `rejected`.
+3. Approvers vote while status is `awaiting_approvers` or `ready_to_publish`. `Complaint::refreshApproverStatus()`:
+   - approvals ≥ `config('spoku.approval_threshold')` (7) → `ready_to_publish`
+   - remaining approvers cannot reach threshold → `rejected`
+   - else stay `awaiting_approvers`
+4. Admin `publish` only from `ready_to_publish` → `published` + `published_at`, and sets assignment flags. Pre-check assignments from the user's help requests.
+
+Person is existing `persons.id` or a new `Person` (table is `persons`, not `people`). Evidence files go to the `public` disk under `complaints/{id}`.
+
+Count approvals with `ApprovalDecision::Approved->value`, not the enum object, in query `where`.

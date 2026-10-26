@@ -16,7 +16,12 @@ class ComplaintController extends Controller
     public function index(): View
     {
         $complaints = Complaint::with(['person', 'user', 'approvals'])
-            ->whereIn('status', [ComplaintStatus::Pending, ComplaintStatus::Published, ComplaintStatus::Rejected])
+            ->whereIn('status', [
+                ComplaintStatus::AwaitingApprovers,
+                ComplaintStatus::ReadyToPublish,
+                ComplaintStatus::Published,
+                ComplaintStatus::Rejected,
+            ])
             ->latest()
             ->paginate(20);
 
@@ -25,14 +30,28 @@ class ComplaintController extends Controller
 
     public function show(Complaint $complaint): View
     {
+        abort_unless(in_array($complaint->status, [
+            ComplaintStatus::AwaitingApprovers,
+            ComplaintStatus::ReadyToPublish,
+            ComplaintStatus::Published,
+            ComplaintStatus::Rejected,
+        ], true), 404);
+
         $complaint->load(['person', 'user', 'files', 'approvals.user']);
         $myDecision = $complaint->approvals->firstWhere('user_id', auth()->id());
+        $canDecide = $complaint->status === ComplaintStatus::AwaitingApprovers
+            || $complaint->status === ComplaintStatus::ReadyToPublish;
 
-        return view('approver.complaints.show', compact('complaint', 'myDecision'));
+        return view('approver.complaints.show', compact('complaint', 'myDecision', 'canDecide'));
     }
 
     public function decide(Request $request, Complaint $complaint): RedirectResponse
     {
+        abort_unless(in_array($complaint->status, [
+            ComplaintStatus::AwaitingApprovers,
+            ComplaintStatus::ReadyToPublish,
+        ], true), 403);
+
         $data = $request->validate([
             'decision' => ['required', 'in:approved,rejected'],
             'notes' => ['nullable', 'string', 'max:1000'],
@@ -50,7 +69,7 @@ class ComplaintController extends Controller
         );
 
         $complaint->refresh();
-        $complaint->refreshPublicationStatus();
+        $complaint->refreshApproverStatus();
 
         return back()->with('status', 'Your decision has been recorded.');
     }

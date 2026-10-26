@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div>
             <h2 class="font-display text-3xl text-ink">File a complaint</h2>
-            <p class="mt-1 text-sm text-ink-mute">Provide clear details and evidence. Approvers will review before publication.</p>
+            <p class="mt-1 text-sm text-ink-mute">Submit for admin review. You can also request help from specific staff teams.</p>
         </div>
     </x-slot>
 
@@ -27,6 +27,29 @@
                     <input type="checkbox" name="is_anonymous" value="1" class="rounded border-paper-line text-signal focus:ring-signal" @checked(old('is_anonymous'))>
                     <span>Submit as anonymous</span>
                 </label>
+
+                <div class="border-t border-paper-line pt-6">
+                    <p class="font-display text-xl mb-2">Request staff help</p>
+                    <p class="text-sm text-ink-mute mb-4">Optional. Ask specific teams for support with this complaint.</p>
+                    <div class="grid gap-3 sm:grid-cols-2 text-sm">
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="help_requested_lawyers" value="1" class="rounded border-paper-line text-signal focus:ring-signal" @checked(old('help_requested_lawyers'))>
+                            Lawyers
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="help_requested_counselors" value="1" class="rounded border-paper-line text-signal focus:ring-signal" @checked(old('help_requested_counselors'))>
+                            Counselors
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="help_requested_law_enforcers" value="1" class="rounded border-paper-line text-signal focus:ring-signal" @checked(old('help_requested_law_enforcers'))>
+                            Law Enforcers
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="help_requested_humanitarians" value="1" class="rounded border-paper-line text-signal focus:ring-signal" @checked(old('help_requested_humanitarians'))>
+                            Humanitarians
+                        </label>
+                    </div>
+                </div>
 
                 <div class="border-t border-paper-line pt-6">
                     <p class="font-display text-xl mb-4">Person complained against</p>

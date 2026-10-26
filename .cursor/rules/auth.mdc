@@ -1,0 +1,17 @@
+---
+description: Public registration and Breeze auth for regular users
+globs: app/Http/Controllers/Auth/**,resources/views/auth/**,resources/views/layouts/guest.blade.php,routes/auth.php
+alwaysApply: false
+---
+
+# Auth
+
+Public register creates `UserRole::User` only. Staff accounts are created by admin (`staff.mdc`).
+
+Required fields: name, email, phone, password. Roll is optional.
+
+- Controller: `RegisteredUserController`
+- View: `resources/views/auth/register.blade.php`
+- Guest pages use `layouts/guest.blade.php` and must keep Log in + Register in the header.
+
+After register, log the user in and send them to `route('dashboard')`, which redirects by role.

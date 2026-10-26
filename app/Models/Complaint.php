@@ -18,6 +18,11 @@ class Complaint extends Model
         'title',
         'details',
         'is_anonymous',
+        'help_requested_lawyers',
+        'help_requested_counselors',
+        'help_requested_law_enforcers',
+        'help_requested_humanitarians',
+        'admin_notes',
         'status',
         'assigned_to_lawyers',
         'assigned_to_counselors',
@@ -30,6 +35,10 @@ class Complaint extends Model
     {
         return [
             'is_anonymous' => 'boolean',
+            'help_requested_lawyers' => 'boolean',
+            'help_requested_counselors' => 'boolean',
+            'help_requested_law_enforcers' => 'boolean',
+            'help_requested_humanitarians' => 'boolean',
             'status' => ComplaintStatus::class,
             'assigned_to_lawyers' => 'boolean',
             'assigned_to_counselors' => 'boolean',
@@ -92,16 +101,43 @@ class Complaint extends Model
         return $this->user?->name ?? 'Unknown';
     }
 
-    public function refreshPublicationStatus(): void
+    public function requestedHelpLabels(): array
     {
+        $labels = [];
+
+        if ($this->help_requested_lawyers) {
+            $labels[] = 'Lawyers';
+        }
+        if ($this->help_requested_counselors) {
+            $labels[] = 'Counselors';
+        }
+        if ($this->help_requested_law_enforcers) {
+            $labels[] = 'Law Enforcers';
+        }
+        if ($this->help_requested_humanitarians) {
+            $labels[] = 'Humanitarians';
+        }
+
+        return $labels;
+    }
+
+    /**
+     * After approver votes, mark ready for admin publish (does not publish).
+     */
+    public function refreshApproverStatus(): void
+    {
+        if (! in_array($this->status, [ComplaintStatus::AwaitingApprovers, ComplaintStatus::ReadyToPublish], true)) {
+            return;
+        }
+
         $threshold = (int) config('spoku.approval_threshold', 7);
         $approved = $this->approvedCount();
         $rejected = $this->rejectedCount();
 
         if ($approved >= $threshold) {
             $this->forceFill([
-                'status' => ComplaintStatus::Published,
-                'published_at' => $this->published_at ?? now(),
+                'status' => ComplaintStatus::ReadyToPublish,
+                'published_at' => null,
             ])->save();
 
             return;
@@ -124,7 +160,7 @@ class Complaint extends Model
         }
 
         $this->forceFill([
-            'status' => ComplaintStatus::Pending,
+            'status' => ComplaintStatus::AwaitingApprovers,
             'published_at' => null,
         ])->save();
     }

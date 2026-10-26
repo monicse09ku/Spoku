@@ -32,6 +32,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/', AdminDashboardController::class)->name('dashboard');
         Route::get('/complaints', [AdminComplaintController::class, 'index'])->name('complaints.index');
         Route::get('/complaints/{complaint}', [AdminComplaintController::class, 'show'])->name('complaints.show');
+        Route::post('/complaints/{complaint}/send-to-approvers', [AdminComplaintController::class, 'sendToApprovers'])
+            ->name('complaints.send-to-approvers');
+        Route::post('/complaints/{complaint}/reject', [AdminComplaintController::class, 'reject'])
+            ->name('complaints.reject');
+        Route::post('/complaints/{complaint}/publish', [AdminComplaintController::class, 'publish'])
+            ->name('complaints.publish');
         Route::patch('/complaints/{complaint}/assignments', [AdminComplaintController::class, 'updateAssignments'])
             ->name('complaints.assignments');
 

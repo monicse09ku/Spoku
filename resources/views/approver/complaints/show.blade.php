@@ -38,21 +38,25 @@
 
             <div class="bg-white shadow rounded-lg p-6">
                 <h4 class="font-semibold mb-3">Your decision</h4>
-                @if($myDecision)
-                    <p class="mb-3 text-sm text-gray-600">Current: <strong>{{ $myDecision->decision->value }}</strong> — you can update it below.</p>
+                @if(! $canDecide)
+                    <p class="text-sm text-gray-600">Voting is closed for this complaint (status: {{ $complaint->status->label() }}).</p>
+                @else
+                    @if($myDecision)
+                        <p class="mb-3 text-sm text-gray-600">Current: <strong>{{ $myDecision->decision->value }}</strong> — you can update it below.</p>
+                    @endif
+                    <form method="POST" action="{{ route('approver.complaints.decide', $complaint) }}" class="space-y-4">
+                        @csrf
+                        <div class="flex gap-4">
+                            <label class="flex items-center gap-2"><input type="radio" name="decision" value="approved" required @checked(optional($myDecision)->decision?->value === 'approved')> Approve</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="decision" value="rejected" @checked(optional($myDecision)->decision?->value === 'rejected')> Reject</label>
+                        </div>
+                        <div>
+                            <x-input-label for="notes" value="Notes (optional)" />
+                            <textarea id="notes" name="notes" class="mt-1 w-full rounded border-gray-300" rows="3">{{ old('notes', $myDecision->notes ?? '') }}</textarea>
+                        </div>
+                        <x-primary-button>Submit decision</x-primary-button>
+                    </form>
                 @endif
-                <form method="POST" action="{{ route('approver.complaints.decide', $complaint) }}" class="space-y-4">
-                    @csrf
-                    <div class="flex gap-4">
-                        <label class="flex items-center gap-2"><input type="radio" name="decision" value="approved" required @checked(optional($myDecision)->decision?->value === 'approved')> Approve</label>
-                        <label class="flex items-center gap-2"><input type="radio" name="decision" value="rejected" @checked(optional($myDecision)->decision?->value === 'rejected')> Reject</label>
-                    </div>
-                    <div>
-                        <x-input-label for="notes" value="Notes (optional)" />
-                        <textarea id="notes" name="notes" class="mt-1 w-full rounded border-gray-300" rows="3">{{ old('notes', $myDecision->notes ?? '') }}</textarea>
-                    </div>
-                    <x-primary-button>Submit decision</x-primary-button>
-                </form>
             </div>
         </div>
     </div>

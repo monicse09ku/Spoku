@@ -1,0 +1,17 @@
+---
+description: Staff accounts, complaint assignments, public team, and user directory
+globs: app/Http/Controllers/Admin/StaffUserController.php,app/Http/Controllers/Staff/**,app/Http/Controllers/TeamController.php,resources/views/admin/staff/**,resources/views/staff/**,resources/views/public/team.blade.php,resources/views/user/directory.blade.php,resources/views/components/staff-card.blade.php
+alwaysApply: false
+---
+
+# Staff
+
+Admin CRUD is one controller, `StaffUserController`, keyed by slug: `approvers`, `lawyers`, `counselors`, `law-enforcers`, `humanitarians`.
+
+Profile image is `users.image_path` on the `public` disk (`staff/`). Use `User::imageUrl()`. Delete the file when replacing or deleting the user.
+
+Assigned roles (lawyer, counselor, law enforcer, humanitarian) share `AssignedComplaintController`. Visibility is the matching `assigned_to_*` column. Do not show unassigned complaints.
+
+Public `/team` and user `/my/directory` both list active staff via `staff-card`. Team shows image, name, role. Directory also shows contact fields.
+
+Help requested (`help_requested_*`) is not the same as assignment (`assigned_to_*`). Only admin sets assignment, at publish or later via `updateAssignments`.

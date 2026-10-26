@@ -53,6 +53,10 @@ class ComplaintController extends Controller
             'person_image' => ['nullable', 'image', 'max:5120'],
             'files' => ['nullable', 'array'],
             'files.*' => ['file', 'max:51200', 'mimetypes:image/jpeg,image/png,image/webp,image/gif,audio/mpeg,audio/wav,audio/mp4,video/mp4,video/quicktime,video/webm'],
+            'help_requested_lawyers' => ['nullable', 'boolean'],
+            'help_requested_counselors' => ['nullable', 'boolean'],
+            'help_requested_law_enforcers' => ['nullable', 'boolean'],
+            'help_requested_humanitarians' => ['nullable', 'boolean'],
         ]);
 
         $complaint = DB::transaction(function () use ($request, $data) {
@@ -78,6 +82,10 @@ class ComplaintController extends Controller
                 'title' => $data['title'],
                 'details' => $data['details'],
                 'is_anonymous' => $request->boolean('is_anonymous'),
+                'help_requested_lawyers' => $request->boolean('help_requested_lawyers'),
+                'help_requested_counselors' => $request->boolean('help_requested_counselors'),
+                'help_requested_law_enforcers' => $request->boolean('help_requested_law_enforcers'),
+                'help_requested_humanitarians' => $request->boolean('help_requested_humanitarians'),
                 'status' => ComplaintStatus::Pending,
             ]);
 
@@ -100,7 +108,7 @@ class ComplaintController extends Controller
 
         return redirect()
             ->route('user.complaints.show', $complaint)
-            ->with('status', 'Complaint submitted for approval.');
+            ->with('status', 'Complaint submitted for admin review.');
     }
 
     public function show(Request $request, Complaint $complaint): View

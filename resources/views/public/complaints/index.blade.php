@@ -8,7 +8,7 @@
                         SPO<span class="text-signal">KU</span>
                     </h1>
                     <p class="mt-5 max-w-xl text-lg text-white/80">
-                        Verified public reports of predatory behavior — reviewed by approvers before they ever reach the feed.
+                        Verified public reports of predatory behavior — screened by admins, confirmed by approvers, then published.
                     </p>
                     <div class="mt-8 flex flex-wrap gap-3">
                         @auth
@@ -30,7 +30,7 @@
             <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8 animate-rise-in" style="animation-delay: 120ms">
                 <div>
                     <h2 class="spoku-section-title">Published reports</h2>
-                    <p class="mt-2 spoku-muted">Visible only after {{ config('spoku.approval_threshold') }} approver confirmations.</p>
+                    <p class="mt-2 spoku-muted">Visible only after admin screening, approver confirmation, and final admin publish.</p>
                 </div>
             </div>
 
